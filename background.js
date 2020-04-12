@@ -42,7 +42,7 @@ const setupDefaultValues = () => {
 
 // Setup the selection and the setup translated lanage menus
 const setupMenus = () => {
-    chrome.contextMenus.create({title: "Search %s with Deepl", contexts:["selection"], id: "context" + "selection"});
+    chrome.contextMenus.create({title: "Search %s with Deepl", contexts:["selection"], id: "contextselection"});
     chrome.contextMenus.create({title : "Setup translated langage", id: "parentSQDS"});
 
     for (const key in translateIn) {
