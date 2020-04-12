@@ -1,4 +1,4 @@
 # DeepL-Extension
-A Google Chrome extension to quicly translate any (supported) langage on DeepL.
+A Google Chrome extension to quickly translate any (supported) langage on DeepL.
 
-It don't use the DeepL API (since its not free), it just open a new tab on DeepL website.
+It doesn't use the DeepL API (since its not free), it just opens a new tab on DeepL website.
