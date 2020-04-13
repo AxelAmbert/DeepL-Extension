@@ -1,11 +1,11 @@
-// Every langages supported by DeepL and its corresponding URL arg
+// Every languages supported by DeepL and its corresponding URL arg
 const translateIn = {"French" : "fr", "English" : "en", "German" : "ge", "Spanish" : "es", "Japanese" : "ja", "Portuguese" : "pt-PT", "Portugues (Brazilian)" : "pt-BR", "Italian" : "it", "Dutch" : "nl", "Polish" : "pl", "Russian" : "ru", "Chinese (simplified)" : "zh"}
 
-// Get the selectedText and the saved langage and put it in the URL
+// Get the selectedText and the saved language and put it in the URL
 const translateSelectedText = async (selectedText) => {
-    chrome.storage.sync.get("TranslateInLangage", function (items) {
-        const TranslateInLangage = items.TranslateInLangage;
-        const createProperties = {url: `https://www.deepl.com/en/translator#auto/${TranslateInLangage}/${encodeURI(selectedText)}`};
+    chrome.storage.sync.get("TranslateInLanguage", function (items) {
+        const TranslateInLanguage = items.TranslateInLanguage;
+        const createProperties = {url: `https://www.deepl.com/en/translator#auto/${TranslateInLanguage}/${encodeURI(selectedText)}`};
 
         chrome.tabs.create(createProperties);
     });
@@ -21,21 +21,21 @@ const onClickHandler = (info, tab) => {
             code: "window.getSelection().toString();"
         }, translateSelectedText);
     } 
-    // Else if its the result of a click on a radio-button to choose a langage
-    // Set the selected langage to the synced storage
-    else if (info.menuItemId.startsWith("SubTranslateInLangage")) {
-        console.log(info.menuItemId.replace("SubTranslateInLangage", ""));
-        chrome.storage.sync.set({TranslateInLangage: info.menuItemId.replace("SubTranslateInLangage", "")});
+    // Else if its the result of a click on a radio-button to choose a language
+    // Set the selected language to the synced storage
+    else if (info.menuItemId.startsWith("SubTranslateInLanguage")) {
+        console.log(info.menuItemId.replace("SubTranslateInLanguage", ""));
+        chrome.storage.sync.set({TranslateInLanguage: info.menuItemId.replace("SubTranslateInLanguage", "")});
     }
 };
 
-// Setup default value of the final translation langage in the synced storage, default = French
+// Setup default value of the final translation language in the synced storage, default = French
 const setupDefaultValues = () => {
-    chrome.storage.sync.get(["LangageToTranslate", "TranslateInlangage"], function (items) {
-        const TranslateInLangage = items.TranslateInLangage;
+    chrome.storage.sync.get(["LanguageToTranslate", "TranslateInlanguage"], function (items) {
+        const TranslateInLanguage = items.TranslateInLanguage;
 
-        if (TranslateInLangage == undefined) {
-            chrome.storage.sync.set({TranslateInLangage: "French"});
+        if (TranslateInLanguage == undefined) {
+            chrome.storage.sync.set({TranslateInLanguage: "French"});
         }
     });
 }
@@ -43,10 +43,10 @@ const setupDefaultValues = () => {
 // Setup the selection and the setup translated lanage menus
 const setupMenus = () => {
     chrome.contextMenus.create({title: "Search %s with Deepl", contexts:["selection"], id: "contextselection"});
-    chrome.contextMenus.create({title : "Setup translated langage", id: "parentSQDS"});
+    chrome.contextMenus.create({title : "Setup translated language", id: "parentSQDS"});
 
     for (const key in translateIn) {
-        chrome.contextMenus.create({type: "radio", title : key, id: "SubTranslateInLangage" + translateIn[key], parentId: "parentSQDS"});
+        chrome.contextMenus.create({type: "radio", title : key, id: "SubTranslateInLanguage" + translateIn[key], parentId: "parentSQDS"});
     }
 }
 
